@@ -360,12 +360,10 @@ def question_13(df10):
 
     lang_vote_success = []
     for i, r in df10.iterrows():
-        char_list = ast.literal_eval(r["spoken_languages"])
-        # print(char_list)
-        for j in char_list:
-            if j["name"] != '':
-                lang_vote_success.append(
-                    [j['name'], df8.loc[i, 'vote_average'], df8.loc[i, 'success_impact']])
+        char_list = r["original_language"]
+
+        lang_vote_success.append(
+            [char_list, df8.loc[i, 'vote_average'], df8.loc[i, 'success_impact']])
     vote_average = []
     success_impact = []
     lang = []
@@ -377,7 +375,7 @@ def question_13(df10):
     import matplotlib.font_manager as font_manager
     plt.clf()
     fig, ax = plt.subplots()
-    fig.set_size_inches(20, 20)
+    # fig.set_size_inches(20, 20)
     scatter_x = np.array(vote_average)
     scatter_y = np.array(success_impact)
     group = np.array(lang)
@@ -385,6 +383,7 @@ def question_13(df10):
     for g in np.unique(group):
         i = np.where(group == g)
         ax.scatter(scatter_x[i], scatter_y[i], label=g)
+
     params = {'legend.fontsize': 8,
               'legend.handlelength': 2}
     # fontP = font_manager.FontProperties().set_family('SimHei')
